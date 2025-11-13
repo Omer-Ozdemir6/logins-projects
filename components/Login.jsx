@@ -15,7 +15,7 @@ const invitialValues = {
     terms: false,
 }
 
-const errorMessages = {
+export const errorMessages = {
   email:"Geçerli bir email giriniz...",
   password:"güçlü bir parola olusturun... En az 4 karakterden olusmalı ve 1 adet büyük harf, 1 adet özel karakter, rakam içermelidir.",
   terms:"Lütfen şartları kabul edin",
@@ -26,7 +26,7 @@ export default function Login() {
   const [errors, setErrors] = useState({
     email: false,
     password: false,
-    terms: false,
+    terms: true,
   });
   const [isValid, setIsValid] = useState(false);
 
@@ -100,8 +100,9 @@ if(name === "password"){
           value={form.email}
           onChange={handleChange}
           invalid={errors.email}
+          data-cy="email-input"
         />
-        {errors.email && <FormFeedback> {errorMessages.email}</FormFeedback>}
+        {errors.email && <FormFeedback data-cy="error-message">{errorMessages.email}</FormFeedback>}
 
       </FormGroup>
 
@@ -115,8 +116,9 @@ if(name === "password"){
           value={form.password}
           onChange={handleChange}
           invalid={errors.password}
+          data-cy="password-input"
         />
-        {errors.password && <FormFeedback> {errorMessages.password}</FormFeedback>}
+        {errors.password && <FormFeedback data-cy="error-message"> {errorMessages.password}</FormFeedback>}
 
       </FormGroup>
 
@@ -127,15 +129,18 @@ if(name === "password"){
           checked={form.terms}
           type="checkbox"
           onChange={handleChange}
+          invalid={errors.terms}
+          data-cy="terms-input"
         />{' '}
         <Label htmlFor="terms" check>
           I agree to terms of service and privacy policy
         </Label>
+        {errors.terms && <FormFeedback data-cy="error-message"> {errorMessages.terms}</FormFeedback>}
       </FormGroup>
 
 
       <FormGroup className="text-center p-4">
-        <Button color="primary" disabled={!isValid} type="submit">
+        <Button color="primary" disabled={!isValid} data-cy="submit-button" type="submit">
           Sign In
         </Button>
       </FormGroup>
